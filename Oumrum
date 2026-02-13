@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ahmed ❤️ Ghufran</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Tahoma',sans-serif}
+body{height:100vh;overflow:hidden;color:white;background:black;display:flex;justify-content:center;align-items:center;text-align:center;position:relative;}
+
+/* شاشة كلمة السر */
+#passwordScreen{
+position:absolute;top:0;left:0;width:100%;height:100%;
+background:black;display:flex;justify-content:center;align-items:center;flex-direction:column;z-index:10;
+}
+#passwordScreen input{
+padding:12px 20px;border-radius:10px;border:none;font-size:18px;margin-bottom:15px;text-align:center;
+}
+#passwordScreen button{
+padding:10px 25px;border:none;border-radius:15px;background:#ff2e93;color:white;font-size:18px;cursor:pointer;transition:0.3s;
+}
+#passwordScreen button:hover{transform:scale(1.1);}
+#passwordScreen p{color:red;margin-top:10px;font-weight:bold;}
+
+/* خلفية نجوم متحركة */
+body::before{
+content:"";position:absolute;width:200%;height:200%;background:url("https://i.imgur.com/9QZ7F8N.png");animation:stars 60s linear infinite;opacity:0.4;z-index:0;
+}
+@keyframes stars{from{transform:translateY(0)}to{transform:translateY(-1000px)}}
+
+.container{
+position:relative;background:rgba(255,255,255,0.08);padding:30px;border-radius:25px;backdrop-filter:blur(20px);width:95%;max-width:500px;box-shadow:0 0 50px rgba(255,0,150,0.8);z-index:2;display:none;
+}
+
+button{
+padding:12px 25px;border:none;border-radius:25px;background:#ff2e93;color:white;cursor:pointer;margin-top:20px;font-size:18px;font-weight:bold;transition:0.3s;
+}
+button:hover{transform:scale(1.1);}
+
+/* عداد العلاقة */
+#relationshipTimer{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:20px;}
+.timer-box{
+background:rgba(255,255,255,0.1);
+padding:15px 20px; /* الحجم الكبير الأصلي */
+border-radius:15px;
+min-width:90px; /* الحجم الكبير الأصلي */
+font-size:28px;  /* الحجم الكبير الأصلي */
+font-weight:bold;
+color:#ff69b4;
+text-shadow:0 0 10px #ff1493,0 0 20px #ff69b4;
+box-shadow:0 0 15px #ff69b4;
+transition:0.3s;
+}
+.timer-box span{display:block;font-size:16px;color:#fff;margin-top:5px;}
+
+/* الرسائل */
+.message{font-size:20px;margin-top:20px;opacity:0;transition:1.5s;}
+</style>
+</head>
+
+<body>
+
+<!-- شاشة كلمة السر -->
+<div id="passwordScreen">
+<input type="password" id="passInput" placeholder="ادخل كلمة السر">
+<button id="passBtn">دخول</button>
+<p id="passMsg"></p>
+</div>
+
+<div class="container" id="mainContent">
+
+<h2>أحمد ❤️ غفران</h2>
+
+<!-- عداد العلاقة -->
+<div id="relationshipTimer">
+  <div class="timer-box" id="yearsBox"><span>سنين</span></div>
+  <div class="timer-box" id="monthsBox"><span>شهور</span></div>
+  <div class="timer-box" id="daysBox"><span>أيام</span></div>
+  <div class="timer-box" id="hoursBox"><span>ساعات</span></div>
+  <div class="timer-box" id="minutesBox"><span>دقائق</span></div>
+  <div class="timer-box" id="secondsBox"><span>ثواني</span></div>
+</div>
+
+<!-- زر واحد لتشغيل الأغنية وعرض الرسائل -->
+<button id="omrumBtn">Ömrüm</button>
+
+<!-- ملف أغنية MP3 مباشر -->
+<audio id="music" src="https://www.dropbox.com/scl/fi/616m16kwc6ebklrykmiet/5696088704_tk.mp3?rlkey=zch7hv86ge357hgng9vlhpo2x&st=050sxyb5&dl=1"></audio>
+
+<!-- الرسائل -->
+<div id="messages" style="margin-top:20px;">
+<p class="message">‏والله وجودك أزهر بروحي مو بس عمري♥️</p>
+<p class="message">أنتِ أجمل شعور مرني واحتلني♥️</p>
+<p class="message">من عرفتك والدنيا تهُديني رضا♥️</p>
+<p class="message">- يا حُباً وَجدتُ بهِ سلاماً لروَحُي ♥️.</p>
+<p class="message">‏البال دارك وباقي الناس زوّار ♥️</p>
+<p class="message">‏أود اخبارك بأنني ازداد حباً لكِ حتّى في الأوقات الخالية منك وبأنني أحبك دائماً.♥️</p>
+<p class="message">‏بيّنَ الوَريد وُ الوَريد أنت♥️</p>
+<p class="message">‏أنتَ الأمان المُطمئن لـ قلبي دائما ♥️</p>
+<p class="message">‏كُل يوم أحبك بشعور جديد ،وكـأن قلـبي تـوه مبتدي فـيك♥️</p>
+<p class="message">‏كُل تفاصيلَك مقدّسة من عيُونك لـ عرُوقك♥️</p>
+</div>
+
+</div>
+
+<script>
+// تحديث العداد
+function updateRelationshipTimer(){
+    const startDate = new Date("2023-04-06T00:00:00");
+    const now = new Date();
+    let diff = now - startDate;
+
+    const seconds = Math.floor(diff / 1000 % 60);
+    const minutes = Math.floor(diff / (1000*60) % 60);
+    const hours = Math.floor(diff / (1000*60*60) % 24);
+    const daysTotal = Math.floor(diff / (1000*60*60*24));
+
+    const years = Math.floor(daysTotal/365);
+    const months = Math.floor((daysTotal % 365)/30);
+    const days = (daysTotal % 365) % 30;
+
+    document.getElementById("yearsBox").innerHTML = `${years}<span>سنين</span>`;
+    document.getElementById("monthsBox").innerHTML = `${months}<span>شهور</span>`;
+    document.getElementById("daysBox").innerHTML = `${days}<span>أيام</span>`;
+    document.getElementById("hoursBox").innerHTML = `${hours}<span>ساعات</span>`;
+    document.getElementById("minutesBox").innerHTML = `${minutes}<span>دقائق</span>`;
+    document.getElementById("secondsBox").innerHTML = `${seconds}<span>ثواني</span>`;
+}
+setInterval(updateRelationshipTimer,1000);
+updateRelationshipTimer();
+
+// عناصر الصفحة
+let omrumBtn = document.getElementById("omrumBtn");
+let music = document.getElementById("music");
+let messages = document.querySelectorAll(".message");
+
+let passwordScreen = document.getElementById("passwordScreen");
+let passInput = document.getElementById("passInput");
+let passBtn = document.getElementById("passBtn");
+let passMsg = document.getElementById("passMsg");
+let mainContent = document.getElementById("mainContent");
+
+// زر كلمة السر
+passBtn.addEventListener("click", ()=>{
+    if(passInput.value === "A654G"){
+        passwordScreen.style.display = "none";
+        mainContent.style.display = "block";
+    }else{
+        passMsg.textContent = "كلمة السر خاطئة!";
+        passInput.value = "";
+    }
+});
+
+// زر Ömrüm → تشغيل الأغنية وظهور الرسائل تدريجياً
+omrumBtn.addEventListener("click",()=>{
+    music.play();
+    messages.forEach((msg,index)=>{
+        setTimeout(()=>{
+            msg.style.opacity="1";
+        }, index * 5000);
+    });
+    omrumBtn.style.display="none";
+});
+</script>
+
+</body>
+</html>
